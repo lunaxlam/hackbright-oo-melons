@@ -37,6 +37,7 @@ class DomesticMelonOrder(AbstractMelonOrder):
 
         # Inherit the __init__() from the AbstractMelonOrder parent class
         super().__init__(species, qty)
+        # The following instance-defined attributes override the attribute values set in the parent class
         self.order_type = "domestic"
         self.tax = 0.08
 
@@ -49,8 +50,10 @@ class InternationalMelonOrder(AbstractMelonOrder):
 
         # Inherit the __init__() from the AbstractMelonOrder parent class
         super().__init__(species, qty)
+        # The following instance-defined attributes override the attribute values set in the parent class
         self.order_type = "international"
         self.tax = 0.17
+        # Additional attribute specific to the InternatinalMelonOrder() class
         self.country_code = country_code
         
 
