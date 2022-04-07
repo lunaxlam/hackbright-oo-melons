@@ -4,14 +4,16 @@ class AbstractMelonOrder:
     """An abstract (base) melon class."""
 
      # Parameters listed in the __init__ are attributes that we must define; other attributes have a default value
-    def __init__(self, species, qty):
+    def __init__(self, species, qty, order_type):
         """Initialize melon order attributes."""
 
         # Following attributes are listed in the __init__() parameters because they must be defined as an argument
         self.species = species
         self.qty = qty
+        self.order_type = order_type
         # Following attributes are not listed in the __init__() parameters because these are default values
         self.shipped = False
+        self.tax = 0.8
 
     def get_total(self):
         """Calculate price, including tax."""
@@ -30,32 +32,26 @@ class AbstractMelonOrder:
 class DomesticMelonOrder(AbstractMelonOrder):
     """A melon order within the USA."""
 
-    # The following attributes apply to all class members
-    order_type = "domestic"
-    tax = 0.08
-
     # Parameters listed in the __init__ are attributes that we must define; other attributes have a default value
     def __init__(self, species, qty):
         """Initialize melon order attributes."""
 
         # Inherit the __init__() from the AbstractMelonOrder parent class
-        super().__init__(species, qty)
+        super().__init__(species, qty, order_type="domestic")
 
 
 class InternationalMelonOrder(AbstractMelonOrder):
     """An international (non-US) melon order."""
 
-     # The following attributes apply to all class members
-    order_type = "international"
-    tax = 0.17
 
     def __init__(self, species, qty, country_code):
         """Initialize melon order attributes."""
 
         # Inherit the __init__() from the AbstractMelonOrder parent class
-        super().__init__(species, qty)
-        # Additional attribute specific to the InternatinalMelonOrder() class
+        super().__init__(species, qty, order_type="international")
+        # Additional attribute specific to the InternatinalMelonOrder() class; will override abstract parent class attributes
         self.country_code = country_code
+        self.tax = 0.17
         
 
     def get_country_code(self):
