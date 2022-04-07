@@ -1,7 +1,7 @@
 """Classes for melon orders."""
 
 class AbstractMelonOrder:
-    """A base melon class."""
+    """An abstract (base) melon class."""
 
      # Parameters listed in the __init__ are attributes that we must define; other attributes have a default value
     def __init__(self, species, qty):
@@ -12,8 +12,6 @@ class AbstractMelonOrder:
         self.qty = qty
         # Following attributes are not listed in the __init__() parameters because these are default values
         self.shipped = False
-        self.order_type = "Unknown"
-        self.tax = 0.08
 
     def get_total(self):
         """Calculate price, including tax."""
@@ -27,6 +25,7 @@ class AbstractMelonOrder:
         """Record the fact than an order has been shipped."""
 
         self.shipped = True
+
 
 class DomesticMelonOrder(AbstractMelonOrder):
     """A melon order within the USA."""
