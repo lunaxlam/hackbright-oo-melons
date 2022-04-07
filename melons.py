@@ -30,28 +30,30 @@ class AbstractMelonOrder:
 class DomesticMelonOrder(AbstractMelonOrder):
     """A melon order within the USA."""
 
+    # The following attributes apply to all class members
+    order_type = "domestic"
+    tax = 0.08
+
     # Parameters listed in the __init__ are attributes that we must define; other attributes have a default value
     def __init__(self, species, qty):
         """Initialize melon order attributes."""
 
         # Inherit the __init__() from the AbstractMelonOrder parent class
         super().__init__(species, qty)
-        # The following instance-defined attributes override the attribute values set in the parent class
-        self.order_type = "domestic"
-        self.tax = 0.08
 
 
 class InternationalMelonOrder(AbstractMelonOrder):
     """An international (non-US) melon order."""
+
+     # The following attributes apply to all class members
+    order_type = "international"
+    tax = 0.17
 
     def __init__(self, species, qty, country_code):
         """Initialize melon order attributes."""
 
         # Inherit the __init__() from the AbstractMelonOrder parent class
         super().__init__(species, qty)
-        # The following instance-defined attributes override the attribute values set in the parent class
-        self.order_type = "international"
-        self.tax = 0.17
         # Additional attribute specific to the InternatinalMelonOrder() class
         self.country_code = country_code
         
