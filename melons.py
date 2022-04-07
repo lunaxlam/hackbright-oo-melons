@@ -1,13 +1,13 @@
 """Classes for melon orders."""
 
 class AbstractMelonOrder:
-    """An abstract (base) melon class."""
+    """An abstract/base melon class. Not meant to be instantiated."""
 
     # Clas-level attribute; function as default for all class instances unless overriden at the instance-level
     tax = 0.8
     shipped = False
 
-     # Parameters listed in the __init__ are attributes that we must define; other attributes have a default value
+     # Requirements to instantiate any AbstractMelonOrder class object (which we would not do since this is an abstract class, but subclasses will inherit these requirements)
     def __init__(self, species, qty, order_type):
         """Initialize melon order attributes."""
 
@@ -20,7 +20,19 @@ class AbstractMelonOrder:
         """Calculate price, including tax."""
 
         base_price = 5
+        international_flat_fee = 3
+
+        # If species type == "christmas" melon
+        if self.species == "christmas":
+            # Base price is 1.5 times as much as the standard base price
+            base_price *= 1.5
+
+        # Calculate the total, including tax
         total = (1 + self.tax) * self.qty * base_price
+
+        # If order_type == "international" and quanity is less than 10, add the international_flat_fee
+        if self.order_type == "international" and self.qty < 10:
+            total += international_flat_fee
 
         return total
 
@@ -33,7 +45,7 @@ class AbstractMelonOrder:
 class DomesticMelonOrder(AbstractMelonOrder):
     """A melon order within the USA."""
 
-    # Parameters listed in the __init__ are attributes that we must define; other attributes have a default value
+    # Requirements to instantiate an InternationalMelonOrder() class object:
     def __init__(self, species, qty):
         """Initialize melon order attributes."""
 
@@ -47,6 +59,7 @@ class InternationalMelonOrder(AbstractMelonOrder):
     # Class-level attribute
     tax = 0.17
 
+    # Requirements to instantiate an InternationalMelonOrder() class object:
     def __init__(self, species, qty, country_code):
         """Initialize melon order attributes."""
 
@@ -60,3 +73,22 @@ class InternationalMelonOrder(AbstractMelonOrder):
         """Return the country code."""
 
         return self.country_code
+
+
+class GovernmentMelonOrder(AbstractMelonOrder):
+    """A government melon order."""
+
+    # Class-level attribute
+    passed_inspection = False
+
+    # Requirements to instantiate an InternationalMelonOrder() class object:
+    def __init__(self, species, qty):
+        """Initialize melon order attributes."""
+
+        # Inherit the __init__() from the AbstractMelonOrder parent class
+        super().__init__(species, qty, order_type="domestic")
+
+    def mark_inspection(self, passed):
+        """Record whether or not a melon hassed passed inspection as a boolean."""
+
+        self.passed_inspection = passed
